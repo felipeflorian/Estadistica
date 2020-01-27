@@ -1,0 +1,145 @@
+---
+title: 'Taller 1: introducción a R'
+author: 'Andrés Felipe Florián Quitián e Isabella Martínez Martínez'
+
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+# Punto 1.
+Se define la siguiente función.
+
+```{r}
+index <- function(vec){
+  new_vec = 1:length(vec)
+  return(new_vec)
+}
+```
+
+Se prueba con un ejemplo:
+
+```{r}
+n = c(2,4,5,1,2)
+new = index(n); new
+```
+
+# Punto 2.
+
+```{r}
+x <- c(2,5,120,5,8,11)
+print("Vector a realizar cambios: ")
+x
+x <- c(x[1:4],7,x[5:length(x)])
+x <- c(x[1:length(x)], 3)
+x[3] <- 12; 
+print("Vector final:")
+x
+```
+
+# Punto 3.
+
+```{r}
+x = seq(from=0, to=5, by=0.01)
+y = sin(x)
+plot(x,y)
+```
+
+# Punto 4.
+
+```{r}
+x <- c(rep(0.5, 4), rep(1.5, 4), rep(3, 4)); x
+```
+
+# Punto 5.
+
+```{r}
+x <- c(1,3,5,7,9)
+y <- c(2,3,5,7,11,13)
+
+x+1; #A cada elemento de x le suma 1.
+y*2; #A cada elemento de y lo multiplica por 2.
+z <- c(length(x), length(y)); #Crea un vector con las longitudes de x, y.
+x+y; #No se ejecuta: x, y tienen longitudes distintas.
+sum(x>5); #Retorna la cantidad de elementos del vector x que cumplan la condición de ser mayores a 5.
+sum(x[x>5]); #Suma los elementos del vector x que cumplan la condición de ser mayores a 5.
+sum(x[x>5 | x>3]); #Suma  los elementos del vector x que cumplan la condición de ser mayores a 5 o mayores a 3.
+y[y>7]; #Retorna los elementos del vector y que cumplan la condición de ser mayores a 7.
+```
+
+# Punto 6.
+
+```{r}
+media <- function(vec){
+  #Función que retorna la media de un vector dado.
+  return(sum(vec)/length(vec))
+}
+
+#Ejemplo
+
+x = c(1,2,3)
+med = media(x); med 
+```
+
+# Punto 7.
+
+```{r}
+var <- function(vec){
+  #Función que retorna la varianza de un vector dado.
+  vec_2 = vec**2;
+  med_2 = media(vec_2);
+  med_1 = media(vec)**2;
+  return(med_2 - med_1)
+}
+
+#Ejemplo
+
+x = c(1,2,3)
+vars = var(x); vars
+```
+
+# Punto 8.
+
+```{r}
+months = seq(1:12)
+values = c(23,33,25,45,10,28,39,27,15,38,34,29)
+
+total = sum(values); total
+min = range(values)[1]; min
+max = range(values)[2]; max
+m_average = c(values[values>mean(values)]); m_average
+```
+
+# Punto 9.
+
+En la gráfica se pueden observar dos concentraciones de datos correspondientes a las dos erupciones del geyser en agosto de 1978 y agosto de 1979. Note que la segunda erupción es más intensa que la anterior, pero a su vez aumenta el intervalo de tiempo hasta la siguiente.
+
+Se determiná que la linea recta presentada en la otra gráfica marca la separación de las dos erupciones. Donde el grupo 1 es el de la izquierda y el grupo 2 el de la derecha.
+
+Por último se creo la vaiable grupo en donde se determina en que grupo esta cada erupción la cual se muestra en la última tabla.
+
+```{r}
+datos = read.table('geyser.txt', sep=";", dec = ","); datos
+max = range(datos$V1)[2]
+min = range(datos$V1)[1]
+x = seq(from= 0, to = 5, by = 0.01)
+y = (-25/2 * x) + 90 
+plot(datos)
+plot(x,y, type = "l")
+grupo <- c(rep(0,222));
+
+for(i in 1:222){
+  if(-25/2 * datos$V1[i] + 90 < datos$V2[i]){
+    grupo[i] = 2
+  }
+  else{
+    grupo[i] = 1
+  }
+}
+datos <- cbind(datos, grupo); datos
+
+
+```
+
