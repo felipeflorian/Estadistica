@@ -169,6 +169,13 @@ hist(pc_empty, main = "Histograma de los Tejidos Empty del Pixel Central", xlab 
 boxplot(pc_empty, col = "Red")
 ```
 
+##Punto 2.
+
+```{r}
+intento = matrix(unlist(data_set[1,1:784]),byrow = FALSE, nrow=28)
+image(intento)
+image(intento, col=gray.colors(64))
+```
 
 
 
