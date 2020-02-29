@@ -1,18 +1,18 @@
 ---
-title: "Taller de Intervalos de Confianza"
+  title: "Taller de Intervalos de Confianza"
 output:
   html_document:
-    df_print: paged
-  pdf_document: default
+  df_print: paged
+pdf_document: default
 ---
-
-# Estadistica
-### Febrero de 2020
-#### AndrÈs Felipe Flori·n e Isabella MartÌnez
-
-## IntroducciÛn 
-
-Se utilizar· un dataset de 5000 im·genes histopatolÛgicasde pacientes con c·ncer colorrectal a escala de grises de 64 pÌxeles.
+  
+  # Estadistica
+  ### Febrero de 2020
+  #### Andr√©s Felipe Flori√°n e Isabella Mart√≠nez
+  
+  ## Introducci√≥n 
+  
+  Se utilizar√° un dataset de 5000 im√°genes histopatol√≥gicasde pacientes con c√°ncer colorrectal a escala de grises de 64 p√≠xeles.
 
 ```{r}
 data_set = read.csv("hmnist_28_28_L.csv", header = TRUE, encoding = "UTF-8", sep = ",") #784
@@ -22,14 +22,15 @@ data_set = read.csv("hmnist_28_28_L.csv", header = TRUE, encoding = "UTF-8", sep
 
 ### a)
 
-Se puede calcular el pÌxel de la mitad de una im·gen de $n \times n$ pÌxeles, dado $n$ par mediante la siguiente fÛrmula: $$  \frac{n(n-1)}{2}. $$ AsÌ pues, el pÌxel de la mitad en una im·gen $28 \times 28$ es el 378. Note el resumen estadÌstico del mismo:
-
+Se puede calcular el p√≠xel de la mitad de una im√°gen de $n \times n$ p√≠xeles, dado $n$ par mediante la siguiente f√≥rmula: $$  \frac{n(n-1)}{2}. $$ As√≠ pues, el p√≠xel de la mitad en una im√°gen $28 \times 28$ es el 378. Note el resumen estad√≠stico del mismo:
+  
 ```{r}
 pixel_central <- data_set$pixel0378
 summary(pixel_central)
+
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pixel_central, main = "Histograma del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -38,14 +39,14 @@ boxplot(pixel_central, col = "Red")
 
 ###b)
 
-Ahora consideramos los tejidos con c·ncer, es decir, aquellos cuyo label es igual a 1.
+Ahora consideramos los tejidos con c√°ncer, es decir, aquellos cuyo label es igual a 1.
 
 ```{r}
 pc_cancer = data_set$pixel0378[data_set$label == 1]
 summary(pc_cancer)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_cancer, main = "Histograma de los Tejidos con Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -54,14 +55,14 @@ boxplot(pc_cancer, col = "Red")
 
 ###c)
 
-Ahora consideramos los tejidos que no tienen c·ncer, es decir, aquellos cuyo label no es igual a 1.
+Ahora consideramos los tejidos que no tienen c√°ncer, es decir, aquellos cuyo label no es igual a 1.
 
 ```{r}
 pc_no_cancer = data_set$pixel0378[data_set$label != 1]
 summary(pc_no_cancer)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_no_cancer, main = "Histograma de los Tejidos con Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -72,13 +73,14 @@ boxplot(pc_no_cancer, col = "Red")
 ###d)
 
 Para los que son STROMA: 
-
+  
 ```{r}
 pc_stroma = data_set$pixel0378[data_set$label == 2]
 summary(pc_stroma)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_stroma, main = "Histograma de los Tejidos Stroma Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -86,13 +88,13 @@ boxplot(pc_stroma, col = "Red")
 ```
 
 Para los que son COMPLEX:
-
 ```{r}
 pc_complex = data_set$pixel0378[data_set$label == 3]
 summary(pc_complex)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_complex, main = "Histograma de los Tejidos Complex del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -100,13 +102,13 @@ boxplot(pc_complex, col = "Red")
 ```
 
 Para los que son LYMPHO:
-
 ```{r}
 pc_lympho = data_set$pixel0378[data_set$label == 4]
 summary(pc_lympho)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_lympho, main = "Histograma de los Tejidos Lympho del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -114,13 +116,14 @@ boxplot(pc_lympho, col = "Red")
 ```
 
 Para los que son DEBRIS:
-
+  
 ```{r}
 pc_debris = data_set$pixel0378[data_set$label == 5]
 summary(pc_debris)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_debris, main = "Histograma de los Tejidos Debris del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -128,13 +131,14 @@ boxplot(pc_debris, col = "Red")
 ```
 
 Para los que son MUCOSA:
-
+  
 ```{r}
 pc_mucosa = data_set$pixel0378[data_set$label == 6]
 summary(pc_mucosa)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_mucosa, main = "Histograma de los Tejidos Mucosa del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -142,13 +146,14 @@ boxplot(pc_mucosa, col = "Red")
 ```
 
 Para los que son ADIPOSE:
-
+  
 ```{r}
 pc_adipose = data_set$pixel0378[data_set$label == 7]
 summary(pc_adipose)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_adipose, main = "Histograma de los Tejidos Adipose del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -156,13 +161,14 @@ boxplot(pc_adipose, col = "Red")
 ```
 
 Para los que son EMPTY:
-
+  
 ```{r}
 pc_empty = data_set$pixel0378[data_set$label == 8]
 summary(pc_empty)
 ```
 
-Considere adem·s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÌxel en codificaciÛn de 8 bits. En el diagrama de caja tambiÈn se ven los valores atÌpicos del mismo.
+
+Considere adem√°s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del p√≠xel en codificaci√≥n de 8 bits. En el diagrama de caja tambi√©n se ven los valores at√≠picos del mismo.
 
 ```{r}
 hist(pc_empty, main = "Histograma de los Tejidos Empty del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -177,7 +183,71 @@ image(intento)
 image(intento, col=gray.colors(64))
 ```
 
+Con cada uno de los tipos:
+
+```{r}
+
+```
 
 
+
+
+
+#Punto 3.
+
+Intervalo de confianza del 95% para la media del pixel central.
+
+Tenemos que 1 $1- \alpha = 0.95$, luego $\frac{\alpha}{2} = 0.025$. Como es una muestra grande se aproxima a una normal. 
+
+##a). 
+
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
+
+```{r}
+media = mean(pixel_central[data_set$label == 1])
+n = length(pixel_central)
+s = sd(pixel_central)
+z = qnorm(0.025, lower.tail = FALSE)
+lim.inf <- media - z*(s/n)
+lim.sup <- media + z*(s/n)
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
+```
+##b).
+
+Para los tejidos que no son tumor.
+
+```{r}
+media = mean(pixel_central[data_set$label != 1])
+n = length(pixel_central)
+s = sd(pixel_central)
+z = qnorm(0.025, lower.tail = FALSE)
+lim.inf <- media - z*(s/n)
+lim.sup <- media + z*(s/n)
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
+```
+##c).
+
+Para los tipos restantes de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  media = mean(pixel_central[data_set$label == i])
+  n = length(pixel_central)
+  s = sd(pixel_central)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim.inf <- media - z*(s/n)
+  lim.sup <- media + z*(s/n)
+  print(tejidos[i-1])
+  d <- c(lim.inf , lim.sup)
+  print(d)
+}
+
+```
+#Punto 4.
 
 --
