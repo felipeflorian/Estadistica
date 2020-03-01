@@ -72,126 +72,31 @@ boxplot(pc_no_cancer, col = "Red")
 
 ###d)
 
-Para los que son STROMA: 
+Consideremos ahora al resto de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  pc_i = data_set$pixel0378[data_set$label == i]
+  summary(pc_i)
+  hist(pc_i, main = paste("Histograma de los tejidos ", tejidos[i-1], " en su pixel central"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+boxplot(pc_i, col = "Red")
   
-```{r}
-pc_stroma = data_set$pixel0378[data_set$label == 2]
-summary(pc_stroma)
+}
 ```
 
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_stroma, main = "Histograma de los Tejidos Stroma Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_stroma, col = "Red")
-```
-
-Para los que son COMPLEX:
-```{r}
-pc_complex = data_set$pixel0378[data_set$label == 3]
-summary(pc_complex)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_complex, main = "Histograma de los Tejidos Complex del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_complex, col = "Red")
-```
-
-Para los que son LYMPHO:
-```{r}
-pc_lympho = data_set$pixel0378[data_set$label == 4]
-summary(pc_lympho)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_lympho, main = "Histograma de los Tejidos Lympho del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_lympho, col = "Red")
-```
-
-Para los que son DEBRIS:
-  
-```{r}
-pc_debris = data_set$pixel0378[data_set$label == 5]
-summary(pc_debris)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_debris, main = "Histograma de los Tejidos Debris del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_debris, col = "Red")
-```
-
-Para los que son MUCOSA:
-  
-```{r}
-pc_mucosa = data_set$pixel0378[data_set$label == 6]
-summary(pc_mucosa)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_mucosa, main = "Histograma de los Tejidos Mucosa del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_mucosa, col = "Red")
-```
-
-Para los que son ADIPOSE:
-  
-```{r}
-pc_adipose = data_set$pixel0378[data_set$label == 7]
-summary(pc_adipose)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_adipose, main = "Histograma de los Tejidos Adipose del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_adipose, col = "Red")
-```
-
-Para los que son EMPTY:
-  
-```{r}
-pc_empty = data_set$pixel0378[data_set$label == 8]
-summary(pc_empty)
-```
-
-
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
-
-```{r}
-hist(pc_empty, main = "Histograma de los Tejidos Empty del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
-boxplot(pc_empty, col = "Red")
-```
 
 ##Punto 2.
 
+Vamos a graficar una imagen de cada tipo.
 ```{r}
-intento = matrix(unlist(data_set[1,1:784]),byrow = FALSE, nrow=28)
-image(intento)
-image(intento, col=gray.colors(64))
+tejidos_t = c("Tumor", "Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 1:8){
+  choices = subset(data_set, label == i)
+  matriz = matrix(unlist(choices[1,1:784]), byrow = FALSE, nrow = 28)
+  image(matriz, col=gray.colors(64), main = paste("Imagen de tipo ", tejidos_t[i]))
+}
 ```
-
-Con cada uno de los tipos:
-
-```{r}
-
-```
-
-
-
-
 
 #Punto 3.
 
@@ -204,7 +109,6 @@ Tenemos que 1 $1- \alpha = 0.95$, luego $\frac{\alpha}{2} = 0.025$. Como es una 
 Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
 
 ```{r}
-
 media = mean(pixel_central[data_set$label == 1])
 n = length(pixel_central)
 s = sd(pixel_central)
@@ -214,8 +118,6 @@ lim.sup <- media + z*(s/n)
 print("IC:")
 d <- c(lim.inf , lim.sup)
 d
-
-
 ```
 ##b).
 
@@ -231,14 +133,12 @@ lim.sup <- media + z*(s/n)
 print("IC:")
 d <- c(lim.inf , lim.sup)
 d
-
 ```
 ##c).
 
 Para los tipos restantes de tejidos.
 
 ```{r}
-
 tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
 for(i in 2:8){
   media = mean(pixel_central[data_set$label == i])
@@ -252,228 +152,144 @@ for(i in 2:8){
   print(d)
 }
 
-
 ```
 #Punto 4.
-
 ##a).
 
-Se tomará una muestra de 200 pixeles aleatoriamente.
+Se tomar� una muestra de 200 im�genes aleatoriamente.
 
 ```{r}
-muestra <- sample(data_set, 200)
-
+muestra <- data_set[sample(nrow(data_set), 200),]
+pixel_central = muestra$pixel0378
 muestra
 ```
 
-
-
-Para una muestra de 200 pixeles. Tejido sin tumor.
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
 
 ```{r}
-medias <-c(rep(0,200))
-for(i in 1:200){
-  x <- muestra[1:5000,i][data_set$label == 1]
-  medias[i] = mean(x)
-}
-
-
-media <- mean(medias)
-n = 200
-s = sd(medias)
+media = mean(pixel_central[muestra$label == 1])
+n = length(pixel_central)
+s = sd(pixel_central)
 z = qnorm(0.025, lower.tail = FALSE)
 lim.inf <- media - z*(s/n)
 lim.sup <- media + z*(s/n)
-IC <- c(lim.inf,lim.sup)
-print("IC: ")
-IC
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
 ```
-
 
 Para los tejidos que no son tumor.
 
 ```{r}
-medias <-c(rep(0,200))
-for(i in 1:200){
-  x <- muestra[1:5000,i][data_set$label != 1]
-  medias[i] = mean(x)
-}
-
-
-media <- mean(medias)
-n = 200
-s = sd(medias)
+media = mean(pixel_central[muestra$label != 1])
+n = length(pixel_central)
+s = sd(pixel_central)
 z = qnorm(0.025, lower.tail = FALSE)
 lim.inf <- media - z*(s/n)
 lim.sup <- media + z*(s/n)
-IC <- c(lim.inf,lim.sup)
-print("IC: ")
-IC
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
 ```
 
-Para el resto de tejidos.
+Para los tipos restantes de tejidos.
 
 ```{r}
 tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
-medias <-c(rep(0,200))
-d <- c(rep(0,7))
-e <- c(rep(0,7))
 for(i in 2:8){
-  for(j in 1:200){
-    x <- muestra[1:5000,i][data_set$label == i]
-    medias[i] = mean(x)
-  }
-  d[i-1] = mean(medias)
-  e[i-1] = sd(medias)
-    
-}
-
-for(i in 1:length(d)){
-  media = d[i]
-  n = 200
-  s = e[i]
+  media = mean(pixel_central[muestra$label == i])
+  n = length(pixel_central)
+  s = sd(pixel_central)
   z = qnorm(0.025, lower.tail = FALSE)
   lim.inf <- media - z*(s/n)
   lim.sup <- media + z*(s/n)
-  print(tejidos[i])
-  f <- c(lim.inf , lim.sup)
-  print(f)
+  print(tejidos[i-1])
+  d <- c(lim.inf , lim.sup)
+  print(d)
 }
-
-
 
 ```
 
 ##b).
 
-Se tomará una muestra de 20 pixeles aleatoriamente.
+Se tomar� una muestra de 20 im�genes aleatoriamente.
 
 ```{r}
-muestra <- sample(data_set, 20)
-
+muestra <- data_set[sample(nrow(data_set), 20),]
+pixel_central = muestra$pixel0378
 muestra
 ```
 
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
 
-
-Para una muestra de 200 pixeles. Tejido sin tumor.
 ```{r}
-medias <-c(rep(0,20))
-for(i in 1:20){
-  x <- muestra[1:5000,i][data_set$label == 1]
-  medias[i] = mean(x)
-}
-
-
-media <- mean(medias)
-n = 20
-s = sd(medias)
+media = mean(pixel_central[muestra$label == 1])
+n = length(pixel_central)
+s = sd(pixel_central)
 z = qnorm(0.025, lower.tail = FALSE)
 lim.inf <- media - z*(s/n)
 lim.sup <- media + z*(s/n)
-IC <- c(lim.inf,lim.sup)
-print("IC: ")
-IC
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
 ```
+
 Para los tejidos que no son tumor.
+
 ```{r}
-medias <-c(rep(0,20))
-for(i in 1:20){
-  x <- muestra[1:5000,i][data_set$label != 1]
-  medias[i] = mean(x)
-}
-
-
-media <- mean(medias)
-n = 20
-s = sd(medias)
+media = mean(pixel_central[muestra$label != 1])
+n = length(pixel_central)
+s = sd(pixel_central)
 z = qnorm(0.025, lower.tail = FALSE)
 lim.inf <- media - z*(s/n)
 lim.sup <- media + z*(s/n)
-IC <- c(lim.inf,lim.sup)
-print("IC: ")
-IC
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
 ```
 
-Para el resto de tejidos.
+Para los tipos restantes de tejidos.
 
 ```{r}
 tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
-medias <-c(rep(0,20))
-d <- c(rep(0,7))
-e <- c(rep(0,7))
 for(i in 2:8){
-  for(j in 1:200){
-    x <- muestra[1:5000,i][data_set$label == i]
-    medias[i] = mean(x)
-  }
-  d[i-1] = mean(medias)
-  e[i-1] = sd(medias)
-    
-}
-
-for(i in 1:length(d)){
-  media = d[i]
-  n = 20
-  s = e[i]
+  media = mean(pixel_central[muestra$label == i])
+  n = length(pixel_central)
+  s = sd(pixel_central)
   z = qnorm(0.025, lower.tail = FALSE)
   lim.inf <- media - z*(s/n)
   lim.sup <- media + z*(s/n)
-  print(tejidos[i])
-  f <- c(lim.inf , lim.sup)
-  print(f)
+  print(tejidos[i-1])
+  d <- c(lim.inf , lim.sup)
+  print(d)
 }
-
-
 
 ```
 
 ##c).
 
+Ahora generaremos 100 muestras aleatorias de 200 im�genes cada una.
+Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
+
 ```{r}
-
-medias <- c(rep(0,200))
-lim.infs <- c(rep(0,100))
-lim.sups <- c(rep(0,200))
-x <-c(rep(0,100))
-
+medias_100 = c(rep(0,100))
 for(i in 1:100){
-  muestra <- sample(data_set, 200)
-  medias <-c(rep(0,200))
-  for(i in 1:200){
-    x <- muestra[1:5000,i][data_set$label == 1]
-    medias[i] = mean(x)
-  }
-  media <- mean(medias)
-  x[i] <- media
-  print(x[i])
-  n = 200
-  s = sd(medias)
-  z = qnorm(0.025, lower.tail = FALSE)
-  inf <- media - z*(s/n)
-  sup <- media + z*(s/n)
-  lim.infs[i] = inf
-  lim.sups[i] = sup
+  muestra <- data_set[sample(nrow(data_set), 200),]
+  pixel_central = muestra$pixel0378
+  media = mean(pixel_central[muestra$label == 1])
+  medias_100[i] = media 
 }
-
-print(datos)
-hist(datos,breaks= 2)
-
-a = mean(datos)
-b = sd(datos)
-c = b/sqrt(100)
-
-#curve(dnorm(x, mean=mean(datos), sd=sd(datos)))
-#curve(dnorm(x, mean = a, sd = b, log = FALSE))
-
-# Gráfica de la región del intervalo
-#cord.x=c(IC[1],seq(IC[1],IC[2],0.01),IC[2])
-#cord.y=c(0,dnorm(seq(IC[1],IC[2],0.01),mean=xbar,sd=SE),0)
-#polygon(lim.infs,lim.sups,col="skyblue")
-#abline(h=0)
-
-
+n = length(medias_100)
+miu = mean(medias_100)
+s = sd(medias_100)
+z = qnorm(0.025, lower.tail = FALSE)
+lim.inf <- media - z*(s/n)
+lim.sup <- media + z*(s/n)
+print("IC:")
+d <- c(lim.inf , lim.sup)
+d
 ```
+
 
 
 
