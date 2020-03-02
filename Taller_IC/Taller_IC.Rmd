@@ -1,0 +1,476 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.---
+title: "Taller de Intervalos de Confianza"
+output:
+html_document:
+df_print: paged
+pdf_document: default
+---
+
+# Estadistica
+### Febrero de 2020
+#### Andrés Felipe Florián e Isabella Martínez
+
+## Introducción 
+
+Se utilizará un dataset de 5000 imágenes histopatológicasde pacientes con cáncer colorrectal a escala de grises de 64 píxeles.
+
+```{r}
+data_set = read.csv("hmnist_28_28_L.csv", header = TRUE, encoding = "UTF-8", sep = ",") #784 píxeles.
+data_set
+```
+
+## Punto 1
+
+### a)
+
+Se puede calcular el píxel de la mitad de una imágen de $n \times n$ píxeles, dado $n$ par mediante la siguiente fórmula: $$  \frac{n(n-1)}{2}. $$ Así pues, el píxel de la mitad en una imágen $28 \times 28$ es el 378. Note el resumen estadístico del mismo:
+  
+```{r}
+pixel_central <- data_set$pixel0378
+summary(pixel_central)
+```
+
+Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+
+```{r}
+hist(pixel_central, main = "Histograma del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+boxplot(pixel_central, col = "Red")
+```
+
+###b)
+
+Ahora consideramos los tejidos con cáncer, es decir, aquellos cuyo label es igual a 1.
+
+```{r}
+pc_cancer = data_set$pixel0378[data_set$label == 1]
+summary(pc_cancer)
+```
+
+Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+
+```{r}
+hist(pc_cancer, main = "Histograma de los Tejidos con Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+boxplot(pc_cancer, col = "Red")
+```
+
+###c)
+
+Ahora consideramos los tejidos que no tienen cáncer, es decir, aquellos cuyo label no es igual a 1.
+
+```{r}
+pc_no_cancer = data_set$pixel0378[data_set$label != 1]
+summary(pc_no_cancer)
+```
+
+Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+
+```{r}
+hist(pc_no_cancer, main = "Histograma de los Tejidos con Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+boxplot(pc_no_cancer, col = "Red")
+```
+
+
+###d)
+
+Consideremos ahora al resto de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  pc_i = data_set$pixel0378[data_set$label == i]
+  summary(pc_i)
+  hist(pc_i, main = paste("Histograma de los tejidos ", tejidos[i-1], " en su pixel central"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+boxplot(pc_i, col = "Red")
+  
+}
+```
+
+
+##Punto 2.
+
+Vamos a graficar una imagen de cada tipo.
+```{r}
+tejidos_t = c("Tumor", "Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 1:8){
+  choices = subset(data_set, label == i)
+  matriz = matrix(unlist(choices[1,1:784]), byrow = FALSE, nrow = 28)
+  image(matriz, col=gray.colors(64), main = paste("Imagen de tipo ", tejidos_t[i]))
+}
+```
+
+#Punto 3.
+
+Intervalo de confianza del 95% para la media del pixel central.
+
+Tenemos que 1 $1- \alpha = 0.95$, luego $\frac{\alpha}{2} = 0.025$. Como es una muestra grande se aproxima a una normal. 
+
+##a). 
+
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
+
+```{r}
+media = mean(pixel_central[data_set$label == 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+##b).
+
+Para los tejidos que no son tumor.
+
+```{r}
+media = mean(pixel_central[data_set$label != 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+##c).
+
+Para los tipos restantes de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  media = mean(pixel_central[data_set$label == i], na.rm = TRUE)
+  n = length(pixel_central)
+  s = sd(pixel_central, na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  print(tejidos[i-1])
+  d <- c(lim_inf , lim_sup)
+  print(d)
+}
+```
+#Punto 4.
+##a).
+
+Se tomará una muestra de 200 imágenes aleatoriamente.
+
+```{r}
+muestra <- data_set[sample(nrow(data_set), 200),]
+pixel_central = muestra$pixel0378
+```
+
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
+
+```{r}
+media = mean(pixel_central[muestra$label == 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+
+Para los tejidos que no son tumor.
+
+```{r}
+media = mean(pixel_central[muestra$label != 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+
+Para los tipos restantes de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  media = mean(pixel_central[muestra$label == i], na.rm = TRUE)
+  n = length(pixel_central)
+  s = sd(pixel_central, na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  print(tejidos[i-1])
+  d <- c(lim_inf , lim_sup)
+  print(d)
+}
+```
+
+##b).
+
+Se tomar? una muestra de 20 im?genes aleatoriamente.
+
+```{r}
+muestra <- data_set[sample(nrow(data_set), 20),]
+pixel_central = muestra$pixel0378
+```
+
+Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
+
+```{r}
+media = mean(pixel_central[muestra$label == 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+
+Para los tejidos que no son tumor.
+
+```{r}
+media = mean(pixel_central[muestra$label != 1], na.rm = TRUE)
+n = length(pixel_central)
+s = sd(pixel_central, na.rm = TRUE)
+z = qnorm(0.025, lower.tail = FALSE)
+lim_inf <- media - z*(s/sqrt(n))
+lim_sup <- media + z*(s/sqrt(n))
+print("IC:")
+d <- c(lim_inf , lim_sup)
+d
+```
+
+Para los tipos restantes de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(i in 2:8){
+  media = mean(pixel_central[muestra$label == i], na.rm = TRUE)
+  n = length(pixel_central)
+  s = sd(pixel_central, na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  print(tejidos[i-1])
+  d <- c(lim_inf , lim_sup)
+  print(d)
+}
+```
+
+##c).
+
+Ahora generaremos 100 muestras aleatorias de 200 im?genes cada una.
+Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
+
+```{r}
+medias_100 = c(rep(0,100))
+IC_inf = c(rep(0,100))
+IC_sup = c(rep(0,100))
+for(i in 1:100){
+  interes = subset(data_set, label == 1)
+  muestra <- interes[sample(nrow(interes), 200),]
+  pixel_central = muestra$pixel0378
+  media = mean(pixel_central[muestra$label == 1], na.rm = TRUE)
+  medias_100[i] = media 
+  n = length(pixel_central)
+  s = sd(pixel_central[muestra$label == 1], na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  IC_inf[i] = lim_inf 
+  IC_sup[i] = lim_sup
+}
+IC_m = rbind(IC_inf, IC_sup)
+mu = mean(medias_100)
+hist(medias_100,main = paste("Histograma de las medias de los tejidos con tumor"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+abline(v=mu)
+out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+```
+
+Ahora los tejidos sin tumor.
+
+```{r}
+medias_100 = c(rep(0,100))
+IC_inf = c(rep(0,100))
+IC_sup = c(rep(0,100))
+for(i in 1:100){
+  interes = subset(data_set, label != 1)
+  muestra <- interes[sample(nrow(interes), 200),]
+  pixel_central = muestra$pixel0378
+  media = mean(pixel_central[muestra$label != 1], na.rm = TRUE)
+  medias_100[i] = media 
+  n = length(pixel_central)
+  s = sd(pixel_central[muestra$label != 1], na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  IC_inf[i] = lim_inf 
+  IC_sup[i] = lim_sup
+}
+IC_m = rbind(IC_inf, IC_sup)
+mu = mean(medias_100)
+hist(medias_100,main = paste("Histograma de las medias de los tejidos con tumor"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+abline(v=mu)
+out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+```
+
+Y finalmente para el resto de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(j in 2:8){
+  medias_100 = c(rep(0,100))
+  IC_inf = c(rep(0,100))
+  IC_sup = c(rep(0,100))
+  for(i in 1:100){
+    interes = subset(data_set, label == j)
+    muestra <- interes[sample(nrow(interes), 200),]
+    pixel_central = muestra$pixel0378
+    media = mean(pixel_central[muestra$label == j], na.rm = TRUE)
+    medias_100[i] = media 
+    n = length(pixel_central)
+    s = sd(pixel_central[muestra$label == j], na.rm = TRUE)
+    z = qnorm(0.025, lower.tail = FALSE)
+    lim_inf <- media - z*(s/sqrt(n))
+    lim_sup <- media + z*(s/sqrt(n))
+    IC_inf[i] = lim_inf 
+    IC_sup[i] = lim_sup
+  }
+  hist(medias_100,main = paste("Histograma de las medias de los tejidos ", tejidos[j-1]), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+  IC_m = rbind(IC_inf, IC_sup)
+  mu = mean(medias_100)
+  matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+  abline(v=mu)
+  out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+  matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+}
+```
+
+##d)
+
+
+Ahora generaremos 100 muestras aleatorias de 20 im?genes cada una.
+Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
+
+```{r}
+medias_100 = c(rep(0,100))
+IC_inf = c(rep(0,100))
+IC_sup = c(rep(0,100))
+for(i in 1:100){
+  interes = subset(data_set, label == 1)
+  muestra <- interes[sample(nrow(interes), 20),]
+  pixel_central = muestra$pixel0378
+  media = mean(pixel_central[muestra$label == 1], na.rm = TRUE)
+  medias_100[i] = media 
+  n = length(pixel_central)
+  s = sd(pixel_central[muestra$label == 1], na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  IC_inf[i] = lim_inf 
+  IC_sup[i] = lim_sup
+}
+IC_m = rbind(IC_inf, IC_sup)
+mu = mean(medias_100)
+hist(medias_100,main = paste("Histograma de las medias de los tejidos con tumor"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+abline(v=mu)
+out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+```
+
+Ahora los tejidos sin tumor.
+
+```{r}
+medias_100 = c(rep(0,100))
+IC_inf = c(rep(0,100))
+IC_sup = c(rep(0,100))
+for(i in 1:100){
+  interes = subset(data_set, label != 1)
+  muestra <- interes[sample(nrow(interes), 20),]
+  pixel_central = muestra$pixel0378
+  media = mean(pixel_central[muestra$label != 1], na.rm = TRUE)
+  medias_100[i] = media 
+  n = length(pixel_central)
+  s = sd(pixel_central[muestra$label != 1], na.rm = TRUE)
+  z = qnorm(0.025, lower.tail = FALSE)
+  lim_inf <- media - z*(s/sqrt(n))
+  lim_sup <- media + z*(s/sqrt(n))
+  IC_inf[i] = lim_inf 
+  IC_sup[i] = lim_sup
+}
+IC_m = rbind(IC_inf, IC_sup)
+mu = mean(medias_100)
+hist(medias_100,main = paste("Histograma de las medias de los tejidos con tumor"), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+abline(v=mu)
+out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+```
+
+Y finalmente para el resto de tejidos.
+
+```{r}
+tejidos <- c("Stroma","Complex","Lympho","Debris","Mucosa","Adipose","Empty")
+for(j in 2:8){
+  medias_100 = c(rep(0,100))
+  IC_inf = c(rep(0,100))
+  IC_sup = c(rep(0,100))
+  for(i in 1:100){
+    interes = subset(data_set, label == j)
+    muestra <- interes[sample(nrow(interes), 20),]
+    pixel_central = muestra$pixel0378
+    media = mean(pixel_central[muestra$label == j], na.rm = TRUE)
+    medias_100[i] = media 
+    n = length(pixel_central)
+    s = sd(pixel_central[muestra$label == j], na.rm = TRUE)
+    z = qnorm(0.025, lower.tail = FALSE)
+    lim_inf <- media - z*(s/sqrt(n))
+    lim_sup <- media + z*(s/sqrt(n))
+    IC_inf[i] = lim_inf 
+    IC_sup[i] = lim_sup
+  }
+  hist(medias_100,main = paste("Histograma de las medias de los tejidos ", tejidos[j-1]), xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
+  IC_m = rbind(IC_inf, IC_sup)
+  mu = mean(medias_100)
+  matplot(IC_m, rbind(1:100,1:100), type="l", lty=1)
+  abline(v=mu)
+  out = which(!(IC_m[1,] < mu & mu < IC_m[2,]))
+  matplot(IC_m[,out], rbind(out,out), type = "l",lty =1, add = T, lwd = 5)
+}
+```
+
+#Punto 5.
+
+
+
+```{r}
+rowMeans(data_set[1,1:784])
+
+```
+
+
+
+
+
+
+
+
+
+
+---------------
