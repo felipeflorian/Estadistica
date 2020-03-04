@@ -162,7 +162,7 @@ for(i in 2:8){
 #Punto 4.
 ##a).
 
-Se tomará una muestra de 200 imágenes aleatoriamente.
+Se tomará una muestra de 200 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendr�n valores nulos, o NaN en sus medias y en sus intervalos de confianza. 
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 200),]
@@ -216,7 +216,7 @@ for(i in 2:8){
 
 ##b).
 
-Se tomar? una muestra de 20 im?genes aleatoriamente.
+Se tomar? una muestra de 20 im?genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendr�n valores nulos, o NaN en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 20),]
@@ -596,7 +596,7 @@ for(i in 2:8){
 #Punto 5.4.
 ##a).
 
-Se tomará una muestra de 200 imágenes aleatoriamente.
+Se tomará una muestra de 200 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendr�n valores nulos, o NaN en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 200),]
@@ -650,7 +650,7 @@ for(i in 2:8){
 
 ##b).
 
-Se tomar? una muestra de 20 im?genes aleatoriamente.
+Se tomar? una muestra de 20 im?genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendr�n valores nulos, o NaN en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 20),]
