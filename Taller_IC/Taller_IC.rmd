@@ -8,11 +8,11 @@ pdf_document: default
   
 # Estadistica
 ### Febrero de 2020
-#### Andrés Felipe Florián e Isabella Martínez
+#### AndrÃ©s Felipe FloriÃ¡n e Isabella MartÃ­nez
 
-## Introducción 
+## IntroducciÃ³n 
 
-Se utilizará un dataset de 5000 imágenes histopatológicas de pacientes con cáncer colorrectal a escala de grises de 64 píxeles.
+Se utilizar? un dataset de 5000 imÃ¡genes histopatolÃ³gicas de pacientes con c?ncer colorrectal a escala de grises de 64 p?xeles.
 
 ```{r}
 data_set = read.csv("hmnist_28_28_L.csv", header = TRUE, encoding = "UTF-8", sep = ",")
@@ -22,14 +22,14 @@ data_set = read.csv("hmnist_28_28_L.csv", header = TRUE, encoding = "UTF-8", sep
 
 ### a)
 
-Se puede calcular el píxel de la mitad de una imágen de $n \times n$ píxeles, dado $n$ par mediante la siguiente fórmula: $$  \frac{n(n-1)}{2}. $$ Así pues, el píxel de la mitad en una imágen $28 \times 28$ es el 378. Note el resumen estadístico del mismo:
+Se puede calcular el pÃ­xel de la mitad de una imÃ¡gen de $n \times n$ pÃ­xeles, dado $n$ par mediante la siguiente fÃ³rmula: $$  \frac{n(n-1)}{2}. $$ AsÃ­ pues, el pÃ­xel de la mitad en una im?gen $28 \times 28$ es el 378. Note el resumen estadÃ­stico del mismo:
   
 ```{r}
 pixel_central <- data_set$pixel0378
 summary(pixel_central)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores atÃ­picos del mismo.
 
 ```{r}
 hist(pixel_central, main = "Histograma del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -38,14 +38,14 @@ boxplot(pixel_central, col = "Red")
 
 ### b)
 
-Ahora consideramos los tejidos con cáncer, es decir, aquellos cuyo label es igual a 1.
+Ahora consideramos los tejidos con cÃ¡ncer, es decir, aquellos cuyo label es igual a 1.
 
 ```{r}
 pc_cancer = data_set$pixel0378[data_set$label == 1]
 summary(pc_cancer)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores atÃ­picos del mismo.
 
 ```{r}
 hist(pc_cancer, main = "Histograma de los Tejidos con Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -54,14 +54,14 @@ boxplot(pc_cancer, col = "Red")
 
 ### c)
 
-Ahora consideramos los tejidos que no tienen cáncer, es decir, aquellos cuyo label no es igual a 1.
+Ahora consideramos los tejidos que no tienen cÃ¡ncer, es decir, aquellos cuyo label no es igual a 1.
 
 ```{r}
 pc_no_cancer = data_set$pixel0378[data_set$label != 1]
 summary(pc_no_cancer)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores atÃ­picos del mismo.
 
 ```{r}
 hist(pc_no_cancer, main = "Histograma de los Tejidos sin Cancer del Pixel Central", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -155,7 +155,7 @@ for(i in 2:8){
 
 ## a)
 
-Se tomará una muestra de 200 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrán valores nulos, o NaN, en sus medias y en sus intervalos de confianza. 
+Se tomarÃ¡ una muestra de 200 imÃ¡genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrÃ¡n valores nulos, o NaN, en sus medias y en sus intervalos de confianza. 
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 200),]
@@ -209,7 +209,7 @@ for(i in 2:8){
 
 ## b)
 
-Se tomará una muestra de 20 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrán valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
+Se tomarÃ¡ una muestra de 20 imÃ¡genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrÃ¡n valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 20),]
@@ -222,7 +222,7 @@ Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
 media = mean(pixel_central[muestra$label == 1], na.rm = TRUE)
 n = length(pixel_central)
 s = sd(pixel_central, na.rm = TRUE)
-z = qnorm(0.025, lower.tail = FALSE)
+z = qt(0.025, 19,lower.tail = FALSE)
 lim_inf <- media - z*(s/sqrt(n))
 lim_sup <- media + z*(s/sqrt(n))
 print("IC:")
@@ -236,7 +236,7 @@ Para los tejidos que no son tumor.
 media = mean(pixel_central[muestra$label != 1], na.rm = TRUE)
 n = length(pixel_central)
 s = sd(pixel_central, na.rm = TRUE)
-z = qnorm(0.025, lower.tail = FALSE)
+z = qt(0.025, 19,lower.tail = FALSE)
 lim_inf <- media - z*(s/sqrt(n))
 lim_sup <- media + z*(s/sqrt(n))
 print("IC:")
@@ -252,7 +252,7 @@ for(i in 2:8){
   media = mean(pixel_central[muestra$label == i], na.rm = TRUE)
   n = length(pixel_central)
   s = sd(pixel_central, na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19,lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   print(tejidos[i-1])
@@ -263,7 +263,7 @@ for(i in 2:8){
 
 ## c)
 
-Ahora generaremos 100 muestras aleatorias de 200 imágenes cada una.
+Ahora generaremos 100 muestras aleatorias de 200 imÃ¡genes cada una.
 Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
 
 ```{r}
@@ -356,7 +356,7 @@ for(j in 2:8){
 
 ## d)
 
-Ahora generaremos 100 muestras aleatorias de 20 imágenes cada una.
+Ahora generaremos 100 muestras aleatorias de 20 imÃ¡genes cada una.
 Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
 
 ```{r}
@@ -371,7 +371,7 @@ for(i in 1:100){
   medias_100[i] = media 
   n = length(pixel_central)
   s = sd(pixel_central[muestra$label == 1], na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19, lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   IC_inf[i] = lim_inf 
@@ -400,7 +400,7 @@ for(i in 1:100){
   medias_100[i] = media 
   n = length(pixel_central)
   s = sd(pixel_central[muestra$label != 1], na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19,lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   IC_inf[i] = lim_inf 
@@ -431,7 +431,7 @@ for(j in 2:8){
     medias_100[i] = media 
     n = length(pixel_central)
     s = sd(pixel_central[muestra$label == j], na.rm = TRUE)
-    z = qnorm(0.025, lower.tail = FALSE)
+    z = qt(0.025, 19, lower.tail = FALSE)
     lim_inf <- media - z*(s/sqrt(n))
     lim_sup <- media + z*(s/sqrt(n))
     IC_inf[i] = lim_inf 
@@ -449,6 +449,7 @@ for(j in 2:8){
 
 
 # Punto 5.
+Se generarÃ¡ una columna con las medias de cada una de las imÃ¡genes, posteriormente se realizarÃ¡ el mismo anÃ¡lis de los puntos anteriores.
 
 ```{r}
 Medias_imagen <- as.vector(rowMeans(data_set[1:5000,1:784]))
@@ -459,14 +460,14 @@ data_set$mean_images <- Medias_imagen
 
 ### a)
 
-Resumen estadístico de las medias.
+Resumen estadÃ­stico de las medias.
   
 ```{r}
 mean_images <- data_set$mean_images
 summary(mean_images)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores atÃ­picos del mismo.
 
 ```{r}
 hist(mean_images, main = "Histograma de las medias.", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -475,14 +476,14 @@ boxplot(mean_images, col = "Red")
 
 ### b)
 
-Ahora consideramos los tejidos con cáncer, es decir, aquellos cuyo label es igual a 1.
+Ahora consideramos los tejidos con cÃ¡ncer, es decir, aquellos cuyo label es igual a 1.
 
 ```{r}
 pc_cancer = data_set$mean_images[data_set$label == 1]
 summary(pc_cancer)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores at?picos del mismo.
 
 ```{r}
 hist(pc_cancer, main = "Histograma de los Tejidos con Cancer de las medias", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -491,14 +492,14 @@ boxplot(pc_cancer, col = "Red")
 
 ### c)
 
-Ahora consideramos los tejidos que no tienen cáncer, es decir, aquellos cuyo label no es igual a 1.
+Ahora consideramos los tejidos que no tienen cÃ¡ncer, es decir, aquellos cuyo label no es igual a 1.
 
 ```{r}
 pc_no_cancer = data_set$mean_images[data_set$label != 1]
 summary(pc_no_cancer)
 ```
 
-Considere además su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del píxel en codificación de 8 bits. En el diagrama de caja también se ven los valores atípicos del mismo.
+Considere ademÃ¡s su histograma y su diagrama de caja, para ver las frecuencias de las intensidades del pÃ­xel en codificaciÃ³n de 8 bits. En el diagrama de caja tambiÃ©n se ven los valores at?picos del mismo.
 
 ```{r}
 hist(pc_no_cancer, main = "Histograma de los Tejidos sin Cancer de las medias", xlab = "Intensidad", ylab = "Frecuencia", col = "Light Blue")
@@ -585,7 +586,7 @@ for(i in 2:8){
 
 ## a)
 
-Se tomará una muestra de 200 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrán valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
+Se tomarÃ¡ una muestra de 200 imÃ¡genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrÃ¡n valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 200),]
@@ -639,7 +640,7 @@ for(i in 2:8){
 
 ## b)
 
-Se tomará una muestra de 20 imágenes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrán valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
+Se tomarÃ¡ una muestra de 20 imÃ¡genes aleatoriamente. Note que es posible que en la muestra no se presenten todos los tipos de tejidos. Por consiguiente, si esto se cumple algunos tejidos tendrÃ¡n valores nulos, o NaN, en sus medias y en sus intervalos de confianza.
 
 ```{r}
 muestra <- data_set[sample(nrow(data_set), 20),]
@@ -652,7 +653,7 @@ Para los tejidos con tumor, es decir para los cuales su label es igual a 1.
 media = mean(mean_images[muestra$label == 1], na.rm = TRUE)
 n = length(mean_images)
 s = sd(mean_images, na.rm = TRUE)
-z = qnorm(0.025, lower.tail = FALSE)
+z = qt(0.025, 19,lower.tail = FALSE)
 lim_inf <- media - z*(s/sqrt(n))
 lim_sup <- media + z*(s/sqrt(n))
 print("IC:")
@@ -666,7 +667,7 @@ Para los tejidos que no son tumor.
 media = mean(mean_images[muestra$label != 1], na.rm = TRUE)
 n = length(mean_images)
 s = sd(mean_images, na.rm = TRUE)
-z = qnorm(0.025, lower.tail = FALSE)
+z = qt(0.025, 19,lower.tail = FALSE)
 lim_inf <- media - z*(s/sqrt(n))
 lim_sup <- media + z*(s/sqrt(n))
 print("IC:")
@@ -682,7 +683,7 @@ for(i in 2:8){
   media = mean(mean_images[muestra$label == i], na.rm = TRUE)
   n = length(mean_images)
   s = sd(mean_images, na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19, lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   print(tejidos[i-1])
@@ -693,7 +694,7 @@ for(i in 2:8){
 
 ## c)
 
-Ahora generaremos 100 muestras aleatorias de 200 imágenes cada una.
+Ahora generaremos 100 muestras aleatorias de 200 imÃ¡genes cada una.
 Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
 
 ```{r}
@@ -786,7 +787,7 @@ for(j in 2:8){
 
 ##d)
 
-Ahora generaremos 100 muestras aleatorias de 20 imágenes cada una.
+Ahora generaremos 100 muestras aleatorias de 20 imÃ¡genes cada una.
 Empecemos con los tejidos que tienen tumor, es decir, cuya label es 1.
 
 ```{r}
@@ -801,7 +802,7 @@ for(i in 1:100){
   medias_100[i] = media 
   n = length(mean_images)
   s = sd(mean_images[muestra$label == 1], na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19, lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   IC_inf[i] = lim_inf 
@@ -830,7 +831,7 @@ for(i in 1:100){
   medias_100[i] = media 
   n = length(mean_images)
   s = sd(mean_images[muestra$label != 1], na.rm = TRUE)
-  z = qnorm(0.025, lower.tail = FALSE)
+  z = qt(0.025, 19, lower.tail = FALSE)
   lim_inf <- media - z*(s/sqrt(n))
   lim_sup <- media + z*(s/sqrt(n))
   IC_inf[i] = lim_inf 
@@ -861,7 +862,7 @@ for(j in 2:8){
     medias_100[i] = media 
     n = length(mean_images)
     s = sd(mean_images[muestra$label == j], na.rm = TRUE)
-    z = qnorm(0.025, lower.tail = FALSE)
+    z = qt(0.025, 19, lower.tail = FALSE)
     lim_inf <- media - z*(s/sqrt(n))
     lim_sup <- media + z*(s/sqrt(n))
     IC_inf[i] = lim_inf 
