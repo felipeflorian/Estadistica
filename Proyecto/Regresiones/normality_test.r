@@ -1,5 +1,5 @@
 library(readr)
-sk <- read_delim("Estadística/Proyecto/South Korea/new_cases_160420.csv",";", escape_double = FALSE, trim_ws = TRUE)
+sk <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/United States/new_cases_160420.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
 #Un vistazo inicial a la gráfica
 plot(sk$`New Cases`, type = "l", col= "blue")
@@ -23,15 +23,13 @@ fit <- nls(y ~ f(x,c(m,s,a,b)), data.frame(x,y), start=list(m=m.0, s=s.0, a=a.0,
 #Resumen del resultado
 summary(fit)
 
-#El valor de b puede ajustarse para que la gráfica tienda a 0 (como debería ocurrir)
-
 #Gráfica del modelo
 par(mfrow=c(1,1))
 plot(c(x,0),c(y,f(coef(fit)["m"],coef(fit))), main="Data", type="n",
      xlab="x", ylab="Brightness")
-curve(f(x, c(43.3714,-4.5854,612.5075,0)), add=TRUE, col="Red", lwd=2)
+curve(f(x, coef(fit)), add=TRUE, col="Red", lwd=2)
 points(x,y, pch=19)
 
 #Cálculo de R2
-y_model = f(x, c(43.3714,-4.5854,612.5075,0))
+y_model = f(x, coef(fit))
 R2 = sum((y_model-mean(y))^2)/sum((y-mean(y))^2); R2

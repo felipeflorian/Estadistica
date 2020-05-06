@@ -1,13 +1,14 @@
 library(readr)
-usa_deaths <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/United States/deaths_recovery_cases.csv",";", escape_double = FALSE, trim_ws = TRUE)
+covid_complete <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/covid_19_clean_complete.csv",";", escape_double = FALSE, trim_ws = TRUE)
+usa_deaths <- covid_complete$Deaths[covid_complete$`Country/Region` == 'US']
 
-totalDeaths <- usa_deaths$Deaths
-days <- usa_deaths$`Number of days`
+totalDeaths <- usa_deaths
+days <- c(1:length(totalDeaths))
 
 deathsPerDay <- c(rep(0,length(totalDeaths)))
 
 for(i in 2:length(totalDeaths)){
-  deathsPerDay[i] = d - totalDeaths[i-1]
+  deathsPerDay[i] = totalDeaths[i] - totalDeaths[i-1]
 }
 
 log_deaths = log(totalDeaths)

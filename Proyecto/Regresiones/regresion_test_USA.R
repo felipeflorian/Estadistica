@@ -1,7 +1,8 @@
 library(readr)
-usa_test <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/United States/number_tests_170420.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
-number_of_test <- usa_test$Total
+usa_test <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/United States/test_20042020.csv",";", escape_double = FALSE, trim_ws = TRUE)
+
+number_of_test <- usa_test$`Number of tests`
 days <- usa_test$`Number of days`
 
 log_test <- log(number_of_test)

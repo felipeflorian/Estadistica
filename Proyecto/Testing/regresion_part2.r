@@ -2,7 +2,7 @@
 
 library(readr)
 library(ggplot2)
-usa_act <- read_delim("Estadística/Proyecto/Datos actualizados/new_cases_usa_060520.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+usa_act <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/Datos actualizados/new_cases_usa_060520.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 plot(usa_act$`number of days`,usa_act$cases, type="o", col="blue", pch="o", lty=1)
 
