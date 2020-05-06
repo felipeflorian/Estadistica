@@ -43,7 +43,7 @@ plot(sk_deaths$`Number of days`, log_deaths, xlab = "Dias", ylab = "Log del nume
 abline(model, col ='black',lwd=3)
 
 plot(sk_deaths$`Number of days`,sk_deaths$Deaths,xlab = "Dias", ylab = "Muertes acumuladas",col="red",pch=20,cex=1.5)
-curve(exp(beta_0)*exp(beta_1*x),add=T,col="black",lwd=3)
+curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
 
 
 plot(sk_deaths$`Number of days`, log_deaths_per_day, xlab = "Dias", ylab = "Log numero de muertes diarias", col = "red",pch = 20, cex = 1.5)
