@@ -30,7 +30,7 @@ plot(usa$`Number of days`,usa$`New Cases`,xlab = "Dias", ylab = "Numero de casos
 curve(exp(beta_0)*exp(beta_1*x),add=T,col="blue",lwd=3)
 
 #Correlación
-cor(usa$`New Cases`,usa$`Number of days`)
+cor(log_new_cases,usa$`Number of days`)
 
 #Establezcamos intervalos de confianza del 95% para los parámetros obtenidos.
 alpha = 0.05
