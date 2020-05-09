@@ -7,7 +7,7 @@ library(readr)
 usa_test <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/Datos actualizados/us_covid19_daily.csv",";", escape_double = FALSE, trim_ws = TRUE)
 
 test <- usa_test$totalTestResultsIncrease 
-tests <- tests[1:length(tests)-1]
+tests <- test[1:length(test)-1]
 
 media = mean(tests)
 media
