@@ -22,3 +22,4 @@ points(x, y, col="red", pch="*")
 lines(x, y, col="red",lty=2)
 legend(89,900000,legend=c("Realidad","Modelo"),col=c("blue","red"),lty=1:2, cex=0.8,
        box.lty=0)
+

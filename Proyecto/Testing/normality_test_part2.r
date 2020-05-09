@@ -9,14 +9,14 @@ new_y <- new_data$cases
 
 # Nuestro modelo
 f <- function(x, theta)  { 
-  m <- theta[1]; s <- theta[2]; a <- theta[3]; b <- theta[4];
-  a*exp(-0.5*((x-m)/s)^2) + b
+  m <- theta[1]; s <- theta[2]; a <- theta[3];
+  a*exp(-0.5*((x-m)/s)^2)
 }
 
 # Parámetros obtenidos con la regresión
 
 # b (el ultimo parámetro) es... complicado.
-params = c(43.3714,-4.5854,612.5075,0)
+params = c(43.4435,5.1073,636.2375)
 
 x = c(89:106)
 y = f(x,params)
