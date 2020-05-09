@@ -10,7 +10,7 @@ newDeaths <- usa_deaths[86:105]
 
 # Nuestro modelo
 f <- function(x){ 
-  exp(-2.810111)*exp(0.156694*x)
+  exp( -2.7836051)*exp(0.1434351*x)
 }
 
 
@@ -18,7 +18,8 @@ x = c(86:105)
 y = f(x)
 
 
-plot(x, newDeaths, type="o", col="blue", pch="o", lty=1, ylim=range(y))
-points(x, y, col="blue", pch="*")
+plot(x, newDeaths, xlab = "Dias", ylab = "Muertes",main = "Test para el número de muertes en Estados Unidos", type="o", col="blue", pch="o", lty=1, ylim=range(y))
+points(x, y, col="red", pch="*")
 lines(x, y, col="red",lty=2)
-
+legend(86,170000,legend=c("Realidad", "Modelo"), col=c("blue","red"),lty=1:2,cex=0.8,
+       box.lty=0)

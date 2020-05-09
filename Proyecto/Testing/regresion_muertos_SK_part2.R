@@ -9,14 +9,17 @@ newDeaths <- newData$Deaths
 
 # Nuestro modelo
 f <- function(x){ 
-  exp(-2.810111)*exp(0.156694*x)
+  exp(-1.06936857)*exp(0.08380922*x)
 }
 
 
 x = c(89:106)
 y = f(x)
+min(newDeaths)
+max(y)
 
-
-plot(x, newDeaths, type="o", col="black", pch="o", lty=1, ylim=range(y))
-points(x, y, col="blue", pch="*")
+plot(x, newDeaths, xlab = "Dias", ylab = "Muertes",main = "Test para el número de muertes en Corea", type="o", col="blue", pch="o", lty=1, ylim=c(230,2476.023))
+points(x, y, col="red", pch="*")
 lines(x, y, col="red",lty=2)
+legend(89,2200,legend=c("Realidad", "Modelo"), col=c("blue","red"),lty=1:2,cex=0.8,
+       box.lty=0)
