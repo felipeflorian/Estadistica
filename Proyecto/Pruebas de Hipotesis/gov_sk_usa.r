@@ -18,12 +18,11 @@ n_2 = 7700
 
 theta = p_1 - p_2
 
-# H_0: theta = 0 vs H_a: theta != 0
+# H_0: theta = 0 vs H_a: theta < 0
 
 s = sqrt( p_1*q_1/n_1 + p_2*q_2/n_2 )
 z = theta/s
-p = 2*pnorm(z, lower.tail = FALSE); p
+p = pnorm(z, lower.tail = FALSE); p
 
-# Podemos afirmar con un 94% de certeza que las proporciones son diferentes. Luego,
-# aunque ambas poblaciones en general no estaban satisfechos con las acciones de sus
-# gobiernos para Marzo, los estadounidenses estaban más enojados con Trump.
+# Podemos afirmar con un 97% de certeza que los estadounidenses están más insatisfechos que los
+# surcoreanos.
