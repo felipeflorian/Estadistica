@@ -33,13 +33,4 @@ curve(exp(beta_0)*exp(beta_1*x),add=T,col="blue",lwd=3)
 cor(log_new_cases,usa$`Number of days`)
 
 #Establezcamos intervalos de confianza del 95% para los parámetros obtenidos.
-alpha = 0.05
-Sxx = sum((usa$`Number of days`-mean(usa$`Number of days`))^2)
-Syy = sum((usa$`New Cases`-mean(usa$`New Cases`))^2)
-Sxy = sum((usa$`Number of days`-mean(usa$`Number of days`))*(usa$`New Cases`-mean(usa$`New Cases`)))
-c00 = sum(usa$`Number of days`^2)/(88*Sxx)
-c11 = 1/Sxx
-SSE = Syy - beta_1*Sxy
-S = sqrt(SSE/86)
-IC_beta0 = c(beta_0 - qt(alpha/2,df = 86, lower.tail = FALSE)*S*sqrt(c00),beta_0 + qt(alpha/2,df = 86, lower.tail = FALSE)*S*sqrt(c00)); IC_beta0
-IC_beta1 = c(beta_1 - qt(alpha/2,df = 86, lower.tail = FALSE)*S*sqrt(c11),beta_1 + qt(alpha/2,df = 86, lower.tail = FALSE)*S*sqrt(c11)); IC_beta1
+confint(mod_exp, level = 0.95)
