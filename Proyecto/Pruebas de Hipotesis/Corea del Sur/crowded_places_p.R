@@ -13,7 +13,7 @@ p_avoid = 0.96
 p_no_avoid = 0.04
 n = 1000
 
-#H_0: p = 0.5 v_s H_q: p < 0.5
+#H_0: p = 0.5 v_s H_q: p > 0.5
 
 z = (p_avoid-0.5)/sqrt(p_avoid*p_no_avoid/n)
 p = pnorm(z, lower.tail = FALSE)

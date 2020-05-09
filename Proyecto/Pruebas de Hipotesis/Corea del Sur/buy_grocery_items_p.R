@@ -16,8 +16,8 @@ n = 1000
 
 #H_0: p = 0.5 v_s H_q: p < 0.5
 
-z = (p_buy-0.5)/sqrt(p_no_buy*p_no_avoid/n)
-p = pnorm(z, lower.tail = TRUE)
+z = (p_buy-0.5)/sqrt(p_no_buy*p_buy/n)
+p = pnorm(-z, lower.tail = FALSE)
 p
 
 #El valor p es infimo por lo cual, podemos afirmar que 
