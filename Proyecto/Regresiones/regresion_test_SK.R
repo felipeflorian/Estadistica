@@ -4,7 +4,14 @@ sk_test <- read_delim("~/Cuarto Semestre/Estadistica/Proyecto/South Korea/cum_nu
 number_of_test <- sk_test$`Number of test`
 days <- sk_test$`Number of days`
 
-log_test <- log(number_of_test)
+
+daily_test <- c(rep(0,length(days)))
+daily_test[1] = number_of_test[1]
+for(i in 2:length(number_of_test)){
+  daily_test[i] = number_of_test[i] - number_of_test[i-1]
+}
+  
+log_test <- log(daily_test)  
 
 #Resumen del modelo
 model <- lm(log_test ~ days)
@@ -16,12 +23,12 @@ beta0 = coef(model)[1]
 beta1 = coef(model)[2]
 
 #Gráficas para los modelos 
-par(mfrow=c(1,2))
-plot(days, log_test, xlab = "Dias", ylab = "Log del numero de test",col="red",pch=20,cex=1.5)
+par(mfrow=c(1,1))
+plot(days, log_test, main = "Regresión número test diarios", xlab = "Dias", ylab = "Log del numero de test",col="red",pch=20,cex=1.5)
 abline(model, col ='black',lwd=3)
 
-plot(days, number_of_test,xlab = "Dias", ylab = "Test acumulados",col="red",pch=20,cex=1.5)
-curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
+#plot(days, daily_test,main = "Modelo exponencial para el número de test diarios", xlab = "Dias", ylab = "Test acumulados",col="red",pch=20,cex=1.5)
+#curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
 
 #Intervalos de confianza del 95%
 alpha = 0.05
