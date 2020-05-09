@@ -16,7 +16,7 @@ n = 1635
 #H_0: p = 0.5 v_s H_q: p < 0.5
 
 z = (p_avoid-0.5)/sqrt(p_avoid*p_no_avoid/n)
-p = pnorm(z, lower.tail = TRUE)
+p = pnorm(-z, lower.tail = FALSE)
 p
 
 #El valor p es pequeño por lo cual, podemos afirmar que

@@ -16,8 +16,8 @@ n = 1635
 #H_0: p = 0.5 v_s H_q: p < 0.5
 
 z = (p_yes-0.5)/sqrt(p_yes*p_no/n)
-p = pnorm(z, lower.tail = TRUE)
+p = pnorm(-z, lower.tail = FALSE)
 p
 
-#El valor p es cero es pequeño por lo cual, podemos afirmar que
+#El valor p es cero por lo cual, podemos afirmar que
 #la minoria de la poblacion estadounidense no almacena productos alimenticios
