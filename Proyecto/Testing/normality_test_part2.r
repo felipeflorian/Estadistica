@@ -21,6 +21,8 @@ params = c(43.3714,-4.5854,612.5075,0)
 x = c(89:106)
 y = f(x,params)
 
-plot(x, new_y, type="o", col="blue", pch="o", lty=1, ylim=c(0,50))
+plot(x, new_y, type="o", col="blue", pch="o", lty=1, ylim=c(0,50), main="Test del modelo en Corea",xlab="Número de Días",ylab="Nuevos Casos")
 points(x, y, col="red", pch="*")
 lines(x, y, col="red",lty=2)
+legend(89,50,legend=c("Realidad","Modelo"),col=c("blue","red"),lty=1:2, cex=0.8,
+       box.lty=0)
