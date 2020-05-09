@@ -19,3 +19,4 @@ S = sd(new_cases);
 n = length(new_cases)
 alpha = 0.05
 IC = c(media - qnorm(alpha/2, lower.tail = FALSE)*S/sqrt(n), media + qnorm(alpha/2, lower.tail = FALSE)*S/sqrt(n)); IC
+
