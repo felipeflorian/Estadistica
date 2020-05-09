@@ -23,12 +23,12 @@ beta0 = coef(model)[1]
 beta1 = coef(model)[2]
 
 #Gráficas para los modelos 
-par(mfrow=c(1,1))
+par(mfrow=c(1,2))
 plot(days, log_test, main = "Regresión número test diarios", xlab = "Dias", ylab = "Log del numero de test",col="red",pch=20,cex=1.5)
 abline(model, col ='black',lwd=3)
 
-#plot(days, daily_test,main = "Modelo exponencial para el número de test diarios", xlab = "Dias", ylab = "Test acumulados",col="red",pch=20,cex=1.5)
-#curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
+plot(days, daily_test,main = "Modelo exponencial para el número de test diarios", xlab = "Dias", ylab = "Test acumulados",col="red",pch=20,cex=1.5)
+curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
 
 #Intervalos de confianza del 95%
 alpha = 0.05
@@ -44,4 +44,5 @@ IC_beta0
 IC_beta1 = c(beta1 - qt(alpha/2,df = length(days)-2, lower.tail = FALSE)*S*sqrt(c11),beta1 + qt(alpha/2,df = length(days)-2, lower.tail = FALSE)*S*sqrt(c11))
 IC_beta1
 
-
+confint(model, level = 0.95)
+cor(days,log_test)

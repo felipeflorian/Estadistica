@@ -39,14 +39,14 @@ model2 = lm(log_deaths_per_day ~ sk_deaths$`Number of days` )
 
 #Gráficas para los modelos 
 par(mfrow=c(1,3))
-plot(sk_deaths$`Number of days`, log_deaths, xlab = "Dias", ylab = "Log del numero de muertes",col="red",pch=20,cex=1.5)
+plot(sk_deaths$`Number of days`, log_deaths,main = "Regresión para el número de muertes acumuladas", xlab = "Dias", ylab = "Log del numero de muertes",col="red",pch=20,cex=1.5)
 abline(model, col ='black',lwd=3)
 
-plot(sk_deaths$`Number of days`,sk_deaths$Deaths,xlab = "Dias", ylab = "Muertes acumuladas",col="red",pch=20,cex=1.5)
+plot(sk_deaths$`Number of days`,sk_deaths$Deaths, main = "Modelo exponencial para el número de muertes acumuladas", xlab = "Dias", ylab = "Muertes acumuladas",col="red",pch=20,cex=1.5)
 curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
 
 
-plot(sk_deaths$`Number of days`, log_deaths_per_day, xlab = "Dias", ylab = "Log numero de muertes diarias", col = "red",pch = 20, cex = 1.5)
+plot(sk_deaths$`Number of days`, log_deaths_per_day, main = "Regresión para el número de muertes diarias", xlab = "Dias", ylab = "Log numero de muertes diarias", col = "red",pch = 20, cex = 1.5)
 abline(model2, col = "black",lwd=3)
 
 #Correlación
@@ -65,3 +65,6 @@ IC_beta0 = c(beta0 - qt(alpha/2,df = length(sk_deaths)-2, lower.tail = FALSE)*S*
 IC_beta0
 IC_beta1 = c(beta1 - qt(alpha/2,df = length(sk_deaths)-2, lower.tail = FALSE)*S*sqrt(c11),beta1 + qt(alpha/2,df = length(sk_deaths$Deaths)-2, lower.tail = FALSE)*S*sqrt(c11))
 IC_beta1
+
+confint(model, level = 0.95)
+cor(sk_deaths$`Number of days`,log_deaths)

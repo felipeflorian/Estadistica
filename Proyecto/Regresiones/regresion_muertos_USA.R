@@ -40,19 +40,16 @@ beta1 = coef(model)[2]
 model2 = lm(log_deaths_per_day ~ days )
 
 #Gráficas para los modelos 
-par(mfrow=c(1,3))
-plot(days, log_deaths, xlab = "Dias", ylab = "Log del numero de muertes",col="red",pch=20,cex=1.5)
+par(mfrow=c(2,2))
+plot(days, log_deaths, main = "Regresión para el número de muertes acumuladas",  xlab = "Dias", ylab = "Log del numero de muertes",col="red",pch=20,cex=1.5)
 abline(model, col ='black',lwd=3)
 
-plot(days, totalDeaths,xlab = "Dias", ylab = "Muertes acumuladas",col="red",pch=20,cex=1.5)
+plot(days, totalDeaths, main = "Modelo exponencial para el número de muertes acumuladas", xlab = "Dias", ylab = "Muertes acumuladas",col="red",pch=20,cex=1.5)
 curve(exp(beta0)*exp(beta1*x),add=T,col="black",lwd=3)
 
 
-plot(days, log_deaths_per_day, xlab = "Dias", ylab = "Log numero de muertes diarias", col = "red",pch = 20, cex = 1.5)
+plot(days, log_deaths_per_day, main ="Regresión para el número de muertes diarias", xlab = "Dias", ylab = "Log numero de muertes diarias", col = "red",pch = 20, cex = 1.5)
 abline(model2, col = "black",lwd=3)
-
-#Correlación
-cor(totalDeaths,days)
 
 #Intervalo de confianza del 95%
 alpha = 0.05
@@ -67,3 +64,6 @@ IC_beta0 = c(beta0 - qt(alpha/2,df = length(totalDeaths)-2, lower.tail = FALSE)*
 IC_beta0
 IC_beta1 = c(beta1 - qt(alpha/2,df = length(totalDeaths)-2, lower.tail = FALSE)*S*sqrt(c11),beta1 + qt(alpha/2,df = length(totalDeaths)-2, lower.tail = FALSE)*S*sqrt(c11))
 IC_beta1
+
+confint(model, level = 0.95)
+cor(days,log_deaths)
