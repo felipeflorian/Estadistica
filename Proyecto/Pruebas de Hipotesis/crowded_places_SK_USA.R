@@ -17,13 +17,13 @@ n2 = 1635
 # Prueba de Hipótesis, p-value.
 
 theta = p_1 - p_2
-# H_0: theta = 0 vs H_a: theta > 0
+# H_0: theta = 0 vs H_a: theta != 0
 
 s = sqrt(p_1*q_1/n1 + p_2*q_2/n2)
 z = theta/s
-p = pnorm(z, lower.tail = FALSE)
+p = 2*pnorm(z, lower.tail = FALSE)
 p
 
-# Podemos afirmar casi con un 100% de certeza que las proporciones del nivel de preocupación
-# son distintos para ambos países. Es decir, los estadounidenses estaban más preocupados para 
-# Marzo que los surcoreanos.
+# Podemos afirmar casi con un 100% de certeza que las proporciones de cambio de habito son distintas
+# para ambos paises. Es decir, los surcoreanos dejaron de asisitir a lugares llenos de genter mientras 
+# que los estadounidenses no cumplieron en un cien por cineto este habito
