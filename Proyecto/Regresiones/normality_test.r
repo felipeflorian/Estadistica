@@ -23,8 +23,6 @@ fit <- nls(y ~ f(x,c(m,s,a)), data.frame(x,y), start=list(m=m.0, s=s.0, a=a.0))
 #Resumen del resultado
 summary(fit)
 
-#El valor de b puede ajustarse para que la gráfica tienda a 0 (como debería ocurrir)
-
 #Gráfica del modelo
 par(mfrow=c(1,1))
 plot(c(x,0),c(y,f(coef(fit)["m"],coef(fit))), main="Regresión Nuevos Casos Corea", type="n",
