@@ -13,10 +13,12 @@ f <- function(x){
 
 x = c(52:66)
 y = f(x)
+b = min(y)
+a = max(newTest)
 
 
-plot(x, newTest, type="o", xlab = "Dias", ylab = "Número de pruebas", main = "Test para el número de pruebas en Estados Unidos",col="black", pch="o", lty=1, ylim=range(y))
-points(x, y, col="blue", pch="*")
+plot(x, newTest, type="o", xlab = "Dias", ylab = "Número de pruebas", main = "Test para el número de pruebas en Estados Unidos",col="blue", pch="o", lty=1, ylim=c(a,10*b))
+points(x, y, col="red", pch="*")
 lines(x, y, col="red",lty=2)
-legend(52,1700,legend=c("Realidad", "Modelo"), col=c("blue","red"),lty=1:2,cex=0.8,
+legend(52,5000000,legend=c("Realidad", "Modelo"), col=c("blue","red"),lty=1:2,cex=0.8,
        box.lty=0)

@@ -22,7 +22,7 @@ f <- function(x){
 
 x = c(81:98)
 y = f(x)
-a = min(newDeaths)
+a = min(newTest)
 b = max(y)
 
 plot(x, newTest, xlab = "Dias", ylab = "Número de pruebas", main = "Test para el número de pruebas en Corea",type="o", col="blue", pch="o", lty=1, ylim=c(a,b))
