@@ -14,8 +14,6 @@ f <- function(x, theta)  {
 }
 
 # Parámetros obtenidos con la regresión
-
-# b (el ultimo parámetro) es... complicado.
 params = c(43.4435,5.1073,636.2375)
 
 x = c(89:106)
